@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafío Ciberseguridad - Seguridad Pública</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent-color: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --correct: #22c55e;
+      --wrong: #ef4444;
+      --warning: #f59e0b;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      width: 100%;
+      max-width: 650px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 2px solid #334155;
+      background-color: #0f172a;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent-color);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--accent-color);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background-color: #334155;
+      color: var(--text-color);
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .timer-container {
+      width: 100%;
+      height: 8px;
+      background-color: #334155;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .timer-bar {
+      height: 100%;
+      width: 100%;
+      background-color: var(--accent-color);
+      transition: width 0.1s linear, background-color 0.3s;
+    }
+
+    .question-title {
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      padding: 14px;
+      background-color: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      color: var(--text-color);
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      border-color: var(--accent-color);
+      background-color: #1a2436;
+    }
+
+    .option-btn.correct {
+      background-color: rgba(34, 197, 94, 0.2);
+      border-color: var(--correct);
+      color: #4ade80;
+    }
+
+    .option-btn.wrong {
+      background-color: rgba(239, 68, 68, 0.2);
+      border-color: var(--wrong);
+      color: #fca5a5;
+    }
+
+    .null-banner {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--warning);
+      color: #fcd34d;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+
+    .leaderboard-table th, .leaderboard-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+    }
+
+    .leaderboard-table th {
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .leaderboard-table tr:nth-child(even) {
+      background-color: rgba(255,255,255,0.02);
+    }
+
+    .leaderboard-table tr.current-user {
+      background-color: rgba(56, 189, 248, 0.15);
+      font-weight: bold;
+    }
+
+    .score-summary {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .score-big {
+      font-size: 3rem;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- INICIO -->
+  <div id="start-screen">
+    <h1>Cuestionario de Ciberseguridad</h1>
+    <p class="subtitle">Gestión y Tecnología de la Información para la Seguridad Pública</p>
+    
+    <form id="start-form">
+      <div class="form-group">
+        <label for="username">Nombre / Identificación del alumno:</label>
+        <input type="text" id="username" placeholder="Ingresa tu nombre..." required autocomplete="off">
+      </div>
+      
+      <div style="background-color: #0f172a; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #334155;">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">⚡ <strong>Reglas del juego:</strong></p>
+        <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 20px;">
+          <li>10 Preguntas con <strong>3 opciones de respuesta</strong> cada una.</li>
+          <li>Tiempo límite: <strong>10 segundos</strong> por pregunta.</li>
+          <li>Si no respondes a tiempo, la pregunta queda <strong>NULA (0 puntos)</strong>.</li>
+          <li>A mayor velocidad al responder correctamente, <strong>más puntos</strong> obtienes.</li>
+        </ul>
+      </div>
+
+      <button type="submit" class="btn">Iniciar Cuestionario</button>
+    </form>
+    <button id="view-leaderboard-btn" class="btn btn-secondary">Ver Tabla de Posiciones</button>
+  </div>
+
+  <!-- CUESTIONARIO -->
+  <div id="quiz-screen" class="hidden">
+    <div class="status-bar">
+      <span>Pregunta <span id="current-q">1</span>/10</span>
+      <span>Puntos: <span id="current-score">0</span></span>
+    </div>
+
+    <div class="timer-container">
+      <div id="timer-bar" class="timer-bar"></div>
+    </div>
+
+    <div id="question-text" class="question-title"></div>
+
+    <div id="options-container" class="options-grid"></div>
+    <div id="null-message" class="null-banner hidden">⚠️ ¡Tiempo agotado! Respuesta NULA.</div>
+  </div>
+
+  <!-- RESULTADOS / POSICIONES -->
+  <div id="result-screen" class="hidden">
+    <h2>Resultados Finales</h2>
+    
+    <div class="score-summary">
+      <p style="color: var(--text-muted);">Puntaje total de <span id="player-display-name" style="color: #fff; font-weight: bold;"></span></p>
+      <div class="score-big" id="final-score">0</div>
+      <p id="accuracy-text" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+    </div>
+
+    <h3 style="margin-top: 20px; color: var(--accent-color); font-size: 1.1rem; text-align: center;">🏆 Tabla de Posiciones</h3>
+    
+    <div style="max-height: 250px; overflow-y: auto;">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Usuario</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+        </tbody>
+      </table>
+    </div>
+
+    <button id="restart-btn" class="btn" style="margin-top: 10px;">Intentar de Nuevo</button>
+    <button id="clear-data-btn" class="btn btn-secondary" style="font-size: 0.8rem; opacity: 0.7;">🔒 Reiniciar Posiciones (Solo Docente)</button>
+  </div>
+
+</div>
+
+<script>
+  // BANCO DE PREGUNTAS (3 opciones por pregunta)
+  const questions = [
+    {
+      question: "¿Qué es la Seguridad Informática según el contenido estudiado?",
+      options: [
+        "Un programa antivirus instalado únicamente en computadoras.",
+        "El conjunto de medidas para proteger computadoras, celulares, redes y datos contra robos o ataques.",
+        "Una ley que sanciona el robo de dispositivos físicos."
+      ],
+      correct: 1
+    },
+    {
+      question: "¿Cuáles son pilares fundamentales de la seguridad informática?",
+      options: [
+        "Confidencialidad, Integridad, Disponibilidad y Autenticación.",
+        "Velocidad, Almacenamiento y Conectividad.",
+        "Hardware, Software y Procesador."
+      ],
+      correct: 0
+    },
+    {
+      question: "¿Qué identificador único de 15 dígitos se usa para bloquear dispositivos móviles robados?",
+      options: [
+        "Dirección IP",
+        "IMEI",
+        "Número de SIM"
+      ],
+      correct: 1
+    },
+    {
+      question: "¿Qué función principal realiza la CPU?",
+      options: [
+        "Guardar de forma permanente fotografías y mensajes.",
+        "Ejecutar instrucciones y procesar información.",
+        "Emitir la señal de radio cifrada de la policía."
+      ],
+      correct: 1
+    },
+    {
+      question: "Al navegar en la web, el protocolo HTTPS indica que:",
+      options: [
+        "La conexión con el sitio web viaja cifrada y protegida.",
+        "La página web es 100% segura y no puede ser falsa.",
+        "El dispositivo aumentará su velocidad de procesamiento."
+      ],
+      correct: 0
+    },
+    {
+      question: "¿Para qué sirve principalmente una Red Privada Virtual (VPN)?",
+      options: [
+        "Para eliminar la necesidad de usar contraseñas.",
+        "Para crear una conexión segura/cifrada entre el dispositivo e Internet ocultando la IP.",
+        "Para recuperar archivos eliminados de una notebook."
+      ],
+      correct: 1
+    },
+    {
+      question: "¿En qué consiste la Autenticación Multifactor (MFA)?",
+      options: [
+        "En pedir dos o más factores de verificación (Algo que sabe, tiene o es).",
+        "En usar la misma clave para todas las aplicaciones.",
+        "En cambiar de contraseña todos los días automáticamente."
+      ],
+      correct: 0
+    },
+    {
+      question: "Una característica clave de las Passkeys es que:",
+      options: [
+        "Requieren ser anotadas en un gestor en papel.",
+        "No usan contraseñas tradicionales y son muy resistentes al phishing.",
+        "Solo sirven para computadoras de escritorio conectadas a red local."
+      ],
+      correct: 1
+    },
+    {
+      question: "¿Cuál es el principio básico del modelo Zero Trust?",
+      options: [
+        "Confiar siempre en las conexiones de la red policial interna.",
+        "Nunca confiar, siempre verificar a todo usuario y dispositivo.",
+        "Usar Wi-Fi abierto para agilizar el trabajo."
+      ],
+      correct: 1
+    },
+    {
+      question: "¿Cómo protege Zero Trust en procedimientos de Seguridad Pública?",
+      options: [
+        "Otorgando acceso libre a toda la base de datos a cualquier usuario.",
+        "Segmentando la red y verificando dispositivos remotos como tablets policiales.",
+        "Desactivando el uso de biometría en los celulares operativos."
+      ],
+      correct: 1
+    }
+  ];
+
+  let currentUser = "";
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let correctCount = 0;
+  let nullCount = 0;
+  let timerInterval = null;
+  let timeRemaining = 10;
+  const QUESTION_TIME = 10;
+  const TEACHER_PASS = "2026"; // Clave del docente
+
+  const startScreen = document.getElementById('start-screen');
+  const quizScreen = document.getElementById('quiz-screen');
+  const resultScreen = document.getElementById('result-screen');
+  
+  const startForm = document.getElementById('start-form');
+  const usernameInput = document.getElementById('username');
+  
+  const currentQEl = document.getElementById('current-q');
+  const currentScoreEl = document.getElementById('current-score');
+  const timerBar = document.getElementById('timer-bar');
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
+  const nullMessage = document.getElementById('null-message');
+  
+  const playerDisplayName = document.getElementById('player-display-name');
+  const finalScoreEl = document.getElementById('final-score');
+  const accuracyText = document.getElementById('accuracy-text');
+  const leaderboardBody = document.getElementById('leaderboard-body');
+  
+  const restartBtn = document.getElementById('restart-btn');
+  const clearDataBtn = document.getElementById('clear-data-btn');
+  const viewLeaderboardBtn = document.getElementById('view-leaderboard-btn');
+
+  startForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    currentUser = usernameInput.value.trim();
+    if (currentUser) {
+      startQuiz();
+    }
+  });
+
+  viewLeaderboardBtn.addEventListener('click', () => {
+    currentUser = "Invitado";
+    showLeaderboard();
+  });
+
+  restartBtn.addEventListener('click', () => {
+    resultScreen.classList.add('hidden');
+    startScreen.classList.remove('hidden');
+    usernameInput.value = "";
+  });
+
+  // Reiniciar datos solo con clave de docente (2026)
+  clearDataBtn.addEventListener('click', () => {
+    const password = prompt("Ingrese la clave de docente para borrar las posiciones:");
+    if (password === TEACHER_PASS) {
+      if (confirm("¿Está seguro de limpiar la tabla de posiciones?")) {
+        localStorage.removeItem('quiz_leaderboard');
+        renderLeaderboard();
+        alert("Tabla de posiciones reiniciada.");
+      }
+    } else if (password !== null) {
+      alert("Contraseña incorrecta. Solo el docente puede realizar esta acción.");
+    }
+  });
+
+  function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    correctCount = 0;
+    nullCount = 0;
+    
+    startScreen.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    quizScreen.classList.remove('hidden');
+    
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    clearInterval(timerInterval);
+    nullMessage.classList.add('hidden');
+    
+    const q = questions[currentQuestionIndex];
+    currentQEl.textContent = currentQuestionIndex + 1;
+    currentScoreEl.textContent = score;
+    questionText.textContent = q.question;
+    
+    optionsContainer.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.onclick = () => selectOption(idx);
+      optionsContainer.appendChild(btn);
+    });
+
+    startTimer();
+  }
+
+  function startTimer() {
+    timeRemaining = QUESTION_TIME;
+    updateTimerBar();
+
+    const startTime = Date.now();
+    
+    timerInterval = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      timeRemaining = Math.max(0, QUESTION_TIME - elapsed);
+      updateTimerBar();
+
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        handleTimeout();
+      }
+    }, 50);
+  }
+
+  function updateTimerBar() {
+    const pct = (timeRemaining / QUESTION_TIME) * 100;
+    timerBar.style.width = `${pct}%`;
+    
+    if (pct < 30) {
+      timerBar.style.backgroundColor = 'var(--wrong)';
+    } else if (pct < 60) {
+      timerBar.style.backgroundColor = 'var(--warning)';
+    } else {
+      timerBar.style.backgroundColor = 'var(--accent-color)';
+    }
+  }
+
+  function selectOption(selectedIndex) {
+    clearInterval(timerInterval);
+    disableOptions();
+
+    const q = questions[currentQuestionIndex];
+    const btns = optionsContainer.children;
+
+    if (selectedIndex === q.correct) {
+      btns[selectedIndex].classList.add('correct');
+      const speedBonus = Math.round((timeRemaining / QUESTION_TIME) * 500);
+      score += 500 + speedBonus;
+      correctCount++;
+    } else {
+      btns[selectedIndex].classList.add('wrong');
+      btns[q.correct].classList.add('correct');
+    }
+
+    currentScoreEl.textContent = score;
+    nextQuestionWithDelay();
+  }
+
+  function handleTimeout() {
+    disableOptions();
+    nullCount++;
+    nullMessage.classList.remove('hidden');
+    nextQuestionWithDelay();
+  }
+
+  function disableOptions() {
+    const btns = optionsContainer.children;
+    for (let btn of btns) {
+      btn.disabled = true;
+    }
+  }
+
+  function nextQuestionWithDelay() {
+    setTimeout(() => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        finishQuiz();
+      }
+    }, 1500);
+  }
+
+  function finishQuiz() {
+    saveScore(currentUser, score);
+    showLeaderboard();
+  }
+
+  function saveScore(name, points) {
+    if (name === "Invitado" || !name) return;
+    
+    let leaderboard = JSON.parse(localStorage.getItem('quiz_leaderboard')) || [];
+
+    leaderboard.push({
+      name: name,
+      score: points,
+      date: new Date().toLocaleDateString()
+    });
+
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 20);
+
+    localStorage.setItem('quiz_leaderboard', JSON.stringify(leaderboard));
+  }
+
+  function showLeaderboard() {
+    quizScreen.classList.add('hidden');
+    startScreen.classList.add('hidden');
+    resultScreen.classList.remove('hidden');
+
+    playerDisplayName.textContent = currentUser;
+    finalScoreEl.textContent = score;
+    accuracyText.textContent = `Correctas: ${correctCount} | Nulas: ${nullCount} | Incorrectas: ${questions.length - correctCount - nullCount}`;
+
+    renderLeaderboard();
+  }
+
+  function renderLeaderboard() {
+    const leaderboard = JSON.parse(localStorage.getItem('quiz_leaderboard')) || [];
+    leaderboardBody.innerHTML = "";
+
+    if (leaderboard.length === 0) {
+      leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Sin registros aún</td></tr>`;
+      return;
+    }
+
+    leaderboard.forEach((entry, idx) => {
+      const tr = document.createElement('tr');
+      if (entry.name === currentUser && entry.score === score) {
+        tr.className = 'current-user';
+      }
+
+      let rankDisplay = idx + 1;
+      if (idx === 0) rankDisplay = '🥇 1';
+      else if (idx === 1) rankDisplay = '🥈 2';
+      else if (idx === 2) rankDisplay = '🥉 3';
+
+      tr.innerHTML = `
+        <td>${rankDisplay}</td>
+        <td>${escapeHtml(entry.name)}</td>
+        <td>${entry.score} pts</td>
+      `;
+      leaderboardBody.appendChild(tr);
+    });
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+</script>
+</body>
+</html>
