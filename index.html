@@ -147,17 +147,97 @@
   const database = firebase.database();
   const leaderboardRef = database.ref('leaderboard');
 
-const questions = [
-    { question: "¿Qué es la Seguridad Informática según el contenido?", options: ["Un programa de medidas instalado únicamente en computadoras.", "El conjunto de medidas para proteger computadoras, celulares, redes y datos contra robos o ataques.", "Una ley que sanciona el robo de dispositivos físicos."], correct: 1 },
-    { question: "¿Cuáles son pilares fundamentales de la seguridad informática?", options: ["Confidencialidad, Integridad, Disponibilidad y Autenticación.", "Velocidad, Almacenamiento y Conectividad.", "Hardware, Software y Procesador."], correct: 0 },
-    { question: "¿Qué identificador único de 15 dígitos se usa para bloquear dispositivos móviles robados?", options: ["IP", "IMEI", "SIM"], correct: 1 },
-    { question: "¿Qué función principal realiza la CPU?", options: ["Guardar de forma permanente fotografías y mensajes.", "Ejecutar instrucciones y procesar información.", "procesar graficos"], correct: 1 },
-    { question: "Al navegar en la web, el protocolo HTTPS indica que:", options: ["La conexión con el sitio web viaja cifrada y protegida.", "La página web es 100% segura y no puede ser falsa.", "El dispositivo aumentará su velocidad de procesamiento."], correct: 0 },
-    { question: "¿Para qué sirve principalmente una Red Privada Virtual (VPN)?", options: ["Para eliminar la necesidad de usar contraseñas.", "Para crear una conexión segura/cifrada entre el dispositivo e Internet ocultando la IP.", "Para recuperar archivos eliminados de una notebook."], correct: 1 },
-    { question: "¿En qué consiste la Autenticación Multifactor (MFA)?", options: ["En pedir dos o más factores de verificación (Algo que sabe, tiene o es).", "En usar la misma clave para todas las aplicaciones.", "En cambiar de contraseña todos los días automáticamente."], correct: 0 },
-    { question: "Una característica clave de las Passkeys es que:", options: ["Requieren ser anotadas en un gestor en papel.", "No usan contraseñas tradicionales y son muy resistentes al phishing.", "Solo sirven para computadoras de escritorio conectadas a red local."], correct: 1 },
-    { question: "¿Cuál es el principio básico del modelo Zero Trust?", options: ["Confiar siempre en las conexiones de la red policial interna.", "Nunca confiar, siempre verificar a todo usuario y dispositivo.", "Usar Wi-Fi abierto para agilizar el trabajo."], correct: 1 },
-    { question: "¿Cómo protege Zero Trust en procedimientos de Seguridad Pública?", options: ["Otorgando acceso libre a toda la base de datos a cualquier usuario.", "Segmentando la red y verificando dispositivos remotos como tablets policiales.", "Desactivando el uso de biometría en los celulares operativos."], correct: 1 }
+  const questions = [
+    { 
+      question: "¿Qué es la Seguridad Informática según el contenido?", 
+      options: [
+        "Un programa de medidas instalado únicamente en computadoras.", 
+        "El conjunto de medidas para proteger computadoras, celulares, redes y datos contra robos o ataques.", 
+        "Una ley que sanciona el robo de dispositivos físicos."
+      ], 
+      correct: 1 
+    },
+    { 
+      question: "¿Cuáles son pilares fundamentales de la seguridad informática?", 
+      options: [
+        "Velocidad, Almacenamiento y Conectividad.", 
+        "Hardware, Software y Procesador.", 
+        "Confidencialidad, Integridad, Disponibilidad y Autenticación."
+      ], 
+      correct: 2 
+    },
+    { 
+      question: "¿Qué identificador único de 15 dígitos se usa para bloquear dispositivos móviles robados?", 
+      options: [
+        "IMEI", 
+        "IP", 
+        "SIM"
+      ], 
+      correct: 0 
+    },
+    { 
+      question: "¿Qué función principal realiza la CPU?", 
+      options: [
+        "Guardar de forma permanente fotografías y mensajes.", 
+        "Procesar gráficos.", 
+        "Ejecutar instrucciones y procesar información."
+      ], 
+      correct: 2 
+    },
+    { 
+      question: "Al navegar en la web, el protocolo HTTPS indica que:", 
+      options: [
+        "El dispositivo aumentará su velocidad de procesamiento.", 
+        "La conexión con el sitio web viaja cifrada y protegida.", 
+        "La página web es 100% segura y no puede ser falsa."
+      ], 
+      correct: 1 
+    },
+    { 
+      question: "¿Para qué sirve principalmente una Red Privada Virtual (VPN)?", 
+      options: [
+        "Para crear una conexión segura/cifrada entre el dispositivo e Internet ocultando la IP.", 
+        "Para eliminar la necesidad de usar contraseñas.", 
+        "Para recuperar archivos eliminados de una notebook."
+      ], 
+      correct: 0 
+    },
+    { 
+      question: "¿En qué consiste la Autenticación Multifactor (MFA)?", 
+      options: [
+        "En usar la misma clave para todas las aplicaciones.", 
+        "En pedir dos o más factores de verificación (Algo que sabe, tiene o es).", 
+        "En cambiar de contraseña todos los días automáticamente."
+      ], 
+      correct: 1 
+    },
+    { 
+      question: "Una característica clave de las Passkeys es que:", 
+      options: [
+        "Requieren ser anotadas en un gestor en papel.", 
+        "Solo sirven para computadoras de escritorio conectadas a red local.", 
+        "No usan contraseñas tradicionales y son muy resistentes al phishing."
+      ], 
+      correct: 2 
+    },
+    { 
+      question: "¿Cuál es el principio básico del modelo Zero Trust?", 
+      options: [
+        "Nunca confiar, siempre verificar a todo usuario y dispositivo.", 
+        "Confiar siempre en las conexiones de la red policial interna.", 
+        "Usar Wi-Fi abierto para agilizar el trabajo."
+      ], 
+      correct: 0 
+    },
+    { 
+      question: "¿Cómo protege Zero Trust en procedimientos de Seguridad Pública?", 
+      options: [
+        "Otorgando acceso libre a toda la base de datos a cualquier usuario.", 
+        "Desactivando el uso de biometría en los celulares operativos.", 
+        "Segmentando la red y verificando dispositivos remotos como tablets policiales."
+      ], 
+      correct: 2 
+    }
   ];
 
   let currentUser = "";
