@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desafío Ciberseguridad - Seguridad Pública</title>
+  <title>Desafío Reglamento Disciplinario Policial</title>
   
   <!-- Firebase Scripts -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -63,8 +63,8 @@
 
   <!-- INICIO -->
   <div id="start-screen">
-    <h1>Cuestionario de Ciberseguridad</h1>
-    <p class="subtitle">Gestión y Tecnología de la Información para la Seguridad Pública</p>
+    <h1>Cuestionario Disciplinario Policial</h1>
+    <p class="subtitle">Evaluación de Artículos y Procedimientos Disciplinarios</p>
     
     <form id="start-form">
       <div class="form-group">
@@ -75,7 +75,7 @@
       <div style="background-color: #0f172a; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #334155;">
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">⚡ <strong>Reglas del juego:</strong></p>
         <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 20px;">
-          <li>10 Preguntas con <strong>3 opciones de respuesta</strong>.</li>
+          <li>10 Preguntas con <strong>3 opciones de respuesta</strong> alternadas.</li>
           <li>Tiempo límite: <strong>10 segundos</strong> por pregunta.</li>
           <li>Si no respondes a tiempo, la pregunta queda <strong>NULA (0 pts)</strong>.</li>
           <li>¡Los resultados se envían a la <strong>tabla en vivo</strong>! 🔴</li>
@@ -149,94 +149,94 @@
 
   const questions = [
     { 
-      question: "¿Qué es la Seguridad Informática según el contenido?", 
+      question: "¿Cuáles son las formas de represión de las faltas según el Art. 164°?", 
       options: [
-        "Un programa de medidas instalado únicamente en computadoras.", 
-        "El conjunto de medidas para proteger computadoras, celulares, redes y datos contra robos o ataques.", 
-        "Una ley que sanciona el robo de dispositivos físicos."
-      ], 
-      correct: 1 
-    },
-    { 
-      question: "¿Cuáles son pilares fundamentales de la seguridad informática?", 
-      options: [
-        "Velocidad, Almacenamiento y Conectividad.", 
-        "Hardware, Software y Procesador.", 
-        "Confidencialidad, Integridad, Disponibilidad y Autenticación."
-      ], 
-      correct: 2 
-    },
-    { 
-      question: "¿Qué identificador único de 15 dígitos se usa para bloquear dispositivos móviles robados?", 
-      options: [
-        "IMEI", 
-        "IP", 
-        "SIM"
+        "Apercibimiento, Arresto, Suspensión de empleo, Destitución (Inhabilitación, Cesantía o Exoneración).", 
+        "Apercibimiento, Trabajo comunitario, Multa económica y Aislamiento.", 
+        "Llamado de atención, Traslado forzoso, Baja deshonrosa y Prisión."
       ], 
       correct: 0 
     },
     { 
-      question: "¿Qué función principal realiza la CPU?", 
+      question: "Según el Art. 182°, ¿cuándo procede la instrucción de una 'Información Sumaria'?", 
       options: [
-        "Guardar de forma permanente fotografías y mensajes.", 
-        "Procesar gráficos.", 
-        "Ejecutar instrucciones y procesar información."
-      ], 
-      correct: 2 
-    },
-    { 
-      question: "Al navegar en la web, el protocolo HTTPS indica que:", 
-      options: [
-        "El dispositivo aumentará su velocidad de procesamiento.", 
-        "La conexión con el sitio web viaja cifrada y protegida.", 
-        "La página web es 100% segura y no puede ser falsa."
+        "Únicamente cuando la falta amerite la pena de Exoneración inmediata.", 
+        "Para comprobar la existencia de hechos que puedan configurar falta leve o la identidad de sus autores.", 
+        "Cuando el imputado sea un oficial de la escala superior exclusivamente."
       ], 
       correct: 1 
     },
     { 
-      question: "¿Para qué sirve principalmente una Red Privada Virtual (VPN)?", 
+      question: "¿Qué causal de archivo de actuaciones prevé el Art. 189°?", 
       options: [
-        "Para crear una conexión segura/cifrada entre el dispositivo e Internet ocultando la IP.", 
-        "Para eliminar la necesidad de usar contraseñas.", 
-        "Para recuperar archivos eliminados de una notebook."
-      ], 
-      correct: 0 
-    },
-    { 
-      question: "¿En qué consiste la Autenticación Multifactor (MFA)?", 
-      options: [
-        "En usar la misma clave para todas las aplicaciones.", 
-        "En pedir dos o más factores de verificación (Algo que sabe, tiene o es).", 
-        "En cambiar de contraseña todos los días automáticamente."
+        "El simple pedido verbal del imputado sin justificación.", 
+        "Que el hecho no constituye falta disciplinaria, no se cometió o no se puede identificar al autor.", 
+        "El paso de 48 horas sin que el sumariante tome declaraciones."
       ], 
       correct: 1 
     },
     { 
-      question: "Una característica clave de las Passkeys es que:", 
+      question: "Conforme al Art. 199°, ¿en qué caso corresponde la instrucción de un Sumario Administrativo?", 
       options: [
-        "Requieren ser anotadas en un gestor en papel.", 
-        "Solo sirven para computadoras de escritorio conectadas a red local.", 
-        "No usan contraseñas tradicionales y son muy resistentes al phishing."
-      ], 
-      correct: 2 
-    },
-    { 
-      question: "¿Cuál es el principio básico del modelo Zero Trust?", 
-      options: [
-        "Nunca confiar, siempre verificar a todo usuario y dispositivo.", 
-        "Confiar siempre en las conexiones de la red policial interna.", 
-        "Usar Wi-Fi abierto para agilizar el trabajo."
+        "Cuando la falta prima facie amerite sanción de Suspensión de Empleo por más de 30 días o Destitución.", 
+        "Únicamente para aplicar la sanción de Apercibimiento escrito.", 
+        "Para investigar exclusivamente la pérdida de un chaleco balístico o armamento."
       ], 
       correct: 0 
     },
     { 
-      question: "¿Cómo protege Zero Trust en procedimientos de Seguridad Pública?", 
+      question: "Según el régimen de Recursos (Arts. 214° al 235°), ¿cuál es el plazo general para interponer el recurso de Reconsideración?", 
       options: [
-        "Otorgando acceso libre a toda la base de datos a cualquier usuario.", 
-        "Desactivando el uso de biometría en los celulares operativos.", 
-        "Segmentando la red y verificando dispositivos remotos como tablets policiales."
+        "10 días hábiles desde la notificación del acto imputado.", 
+        "5 días hábiles contados a partir de la notificación formal.", 
+        "24 horas desde la firma de la disposición."
+      ], 
+      correct: 1 
+    },
+    { 
+      question: "Dentro de los Recursos (Arts. 214°-235°), ¿qué efecto produce la interposición de un recurso disciplinario sobre la sanción?", 
+      options: [
+        "No suspende la ejecución de la sanción impuesta, salvo disposición expresa en contrario.", 
+        "Suspende automáticamente la aplicación del arresto o suspensión hasta la resolución final.", 
+        "Anula definitivamente la sanción en caso de falta leve."
+      ], 
+      correct: 0 
+    },
+    { 
+      question: "De acuerdo con el Art. 244° (Del Personal Procesado), ¿cuál es la situación del personal al que se le dicta Auto de Procesamiento por delito doloso?", 
+      options: [
+        "Se le otorga licencia compensatoria mientras dure el juicio.", 
+        "Pasa automáticamente a prestar servicio en tareas administrativas internas.", 
+        "Pasa a situación de Pasiva por pase a retiro provisional o medida preventiva."
       ], 
       correct: 2 
+    },
+    { 
+      question: "Según los Arts. 244° al 250°, si el personal imputado resulta absuelto o sobreseído en sede judicial:", 
+      options: [
+        "Queda exonerado automáticamente del servicio policial sin derecho a reclamo.", 
+        "No exime de la responsabilidad disciplinaria si subsiste la comisión de una falta administrativa.", 
+        "Queda eximido de todo tipo de responsabilidad, dictándose el archivo automático del sumario."
+      ], 
+      correct: 1 
+    },
+    { 
+      question: "En relación al Art. 251° (Daño en bienes del Estado), ¿qué trámite debe iniciarse independientemente del juzgamiento disciplinario?", 
+      options: [
+        "El trámite o actuación administrativa tendiente a la determinación de la responsabilidad patrimonial y resarcimiento.", 
+        "La denuncia ante el Tribunal de Cuentas dentro de las 12 horas.", 
+        "El descuento automático e inmediato del 50% del haber mensual del funcionario."
+      ], 
+      correct: 0 
+    },
+    { 
+      question: "Conforme a las disposiciones sobre Estado Económico (Arts. 271° a 276°), ¿qué constituye una falta disciplinaria grave en este ámbito?", 
+      options: [
+        "Solicitar un crédito bancario personal conforme a los límites de la ley.", 
+        "La adquisición de compromisos financieros por encima de la capacidad de pago que comprometa el decoro de la función.", 
+        "Tener más de dos tarjetas de crédito activas a nombre del funcionario policial."
+      ], 
+      correct: 1 
     }
   ];
 
